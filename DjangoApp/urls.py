@@ -1,41 +1,45 @@
-"""
-Definition of urls for DjangoApp.
-"""
+"""DjangoApp URL Configuration
 
-from datetime import datetime
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/1.10/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.conf.urls import url, include
+    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+"""
 from django.conf.urls import url
-from app.forms import BootstrapAuthenticationForm
-from app.views import *
-from app.models import *
-from django.contrib.auth.views import *
+from django.contrib import admin
+from django.conf.urls import include
+from hr import views as hrviews
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.auth.decorators import login_required, permission_required
 
 
-# Uncomment the next lines to enable the admin:
-# from django.conf.urls import include
-# from django.contrib import admin
-# admin.autodiscover()
-
+admin.site.site_header = 'MicroDesk Administration'
 urlpatterns = [
-    # Examples:
-     
-    url(r'^$', home, name='home'),
-    url(r'^contact$', contact, name='contact'),
-    url(r'^about', about, name='about'),
-   url(r'^login/$', login, {
-            'template_name': 'app/login.html',
-            'authentication_form': BootstrapAuthenticationForm,
-            'extra_context':
-            {
-                'title':'Log in',
-                'year':datetime.now().year,
-            }
-        },
-        name='login'),
-       url(r'^logout$', logout, {  'next_page': '/'  },        name='logout')
 
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    url(r'^$', hrviews.index, name='index'),
 
-    # Uncomment the next line to enable the admin:
-    # url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
+
+    url(r'^hr/', include('hr.urls')),
+
+    url(r'^procurement/', include('procurement.urls')),
+
+    url(r'^assets/', include('assets.urls')),
+
+    url(r'^reports/', include('reports.urls')),
+
+    url(r'^accounts/', include('registration.backends.default.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

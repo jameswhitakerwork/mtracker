@@ -1,3 +1,14 @@
-# DjangoAzure [![Deploy to Azure](http://azuredeploy.net/deploybutton.png)](https://azuredeploy.net/)
+# MicroDesk
+An Enteprise Management Web Application
 
-Django makes it easier to build better Web apps more quickly and with less code.[Get started with Django](https://www.djangoproject.com/start/)
+# HR Module:
+In Development
+
+# Reports:
+Scheduled
+
+# Alerts: 
+Scheduled
+
+# Asset Module: 
+Scheduled

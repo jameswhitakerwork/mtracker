@@ -1,0 +1,83 @@
+{% extends "hr_base.html" %}
+{% load staticfiles %}
+{% load django_tables2 %}
+
+
+
+{% block body-content %}
+<link rel="stylesheet" href="{% static 'django_tables2/themes/paleblue/css/screen.css' %}" />
+
+<ul class="breadcrumb">
+  <li><a href="{% url 'index' %}">Home</a></li>
+  <li><a href="{% url 'staff_list' %}">HR</a></li>
+  <li class="active">Staff List</li>
+</ul>
+
+
+
+
+{% endblock %}
+
+
+
+
+{% block table-content %}
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h3>Staff Search</h3></div>
+  <div class="panel-body">
+        <form action="" method="get">
+            {{ f.form.as_p }}
+            <input type="submit" />
+        </form>
+  </div>
+</div>
+
+
+
+
+<table class="table table-striped table-hover ">
+    <thead>
+        <tr>
+        <th>Name</th>
+        <th>Position</th>
+        <th>Program</th>
+        <th>Duty Station</th>
+        <th>On Contract</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for s in f.qs %}
+        {% if s.get_contract.ending_soon %}
+        <tr class="danger">
+        {% else %}
+        <tr>
+        {% endif %}
+            <td><a href="{% url 'staff_view' s.id %}">{{ s.last_name }} {{s.first_name }}</a></td>
+            {% if s.get_position.title %}
+            <td><a href="{% url 'position_view' s.get_position.id %}">{{ s.get_position.title }}</a></td>
+            {% else %}
+            <td>---</td>
+            {% endif %}
+            <td>{{ s.get_position.program }}</td>
+            <td>{{ s.get_position.duty_station }}</td>
+            {% if s.get_contract.ending_soon %}
+            <td><a href="{% url 'contract_view' s.get_contract.id %}"><strong>NEEDS RENEWAL</strong></a></td>
+            {% elif s.active_contract %}
+            <td><a href="{% url 'contract_view' s.get_contract.id %}">Yes</a></td>
+            {% else %}
+            <td>No</td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+
+
+    </tbody>
+
+
+
+</table>
+
+
+{% endblock %}

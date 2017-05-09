@@ -1,0 +1,34 @@
+{% extends 'hr_base.html' %}
+{% load staticfiles %}
+
+{% block page-content %}
+
+{% block head %}
+    
+{% endblock %}
+
+{% block head-title %}
+
+{% endblock %}
+
+{% block body-content %}
+<div class="col-xs-12" style="height:150px;"></div>
+
+<div class="col-md-1"></div>
+<div class="col-md-1"><a href="{% url 'staff_list' %}" class="btn btn-primary btn-lg">HR</a></div>
+<div class="col-md-1"></div>
+<div class="col-md-1"></div>
+<div class="col-md-1"><a href="{% url 'asset_list' %}" class="btn btn-info btn-lg">Assets</a></div>
+<div class="col-md-1"></div>
+<div class="col-md-1"></div>
+<div class="col-md-1"><a href="{% url 'dashboard' %}" class="btn btn-success disabled btn-lg">Procurement</a></div>
+<div class="col-md-1"></div>
+<div class="col-md-1"></div>
+<div class="col-md-1"><a href="{% url 'report-list' %}" class="btn btn-warning btn-lg">Reports</a></div>
+<div class="col-md-1"></div>
+
+
+
+{% endblock %}
+
+{% endblock %}

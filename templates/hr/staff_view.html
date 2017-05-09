@@ -1,0 +1,90 @@
+{% extends "hr_base.html" %}
+{% load staticfiles %}
+
+{% block body-content %}
+
+<ul class="breadcrumb">
+  <li><a href="{% url 'index' %}">Home</a></li>
+  <li><a href="{% url 'staff_list' %}">HR</a></li>
+    <li><a href="{% url 'staff_list' %}">Staff List</a></li>
+  <li class="active">View Staff Member</li>
+</ul>
+
+<div class="panel panel-default">
+  <div class="panel-heading"><h1>Staff Details</h1></div>
+  <div class="panel-body">
+
+    <div class="col-md-8">
+    <h2 id='name'>{{ staff.first_name }} {{ staff.last_name }}</h2>
+    <h3>{{ position.program }} {{ position.title }}</h3>
+    <img src="/static/flags/{{ countryflag }}.gif">           {% if staff.active_contract %}<span class="label label-success">Active Contract</span>{% else %}<span class="label label-default">No Contract</span>{% endif %}
+    </div>
+
+    <div class="col-md-4"><img src="/media/{{ staff.photo }}"></div>
+
+  </div>
+</div>
+
+<hr>
+
+<div>
+    {% if contract_set %}
+        <h2> Contracts </h2>
+        {% for c in contract_set %}
+        <div class="panel panel-default">
+        <div class="panel-heading">
+            {% if c.is_active %}
+            <span class="label label-success">Active</span>{% else %}<span class="label label-default">Inactive</span>
+            {% endif %}
+
+            <h4><a href="#"><strong>Contract {{ c.contract_code }} - {{ c.get_position.program }} - {{ c.get_position.title }} - {{c.get_position.duty_station }}</strong></a></h4>
+        </div>
+
+        <div class="panel-body">
+
+            {% if c.ending_soon and c.renew_after_expires %}
+                <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>This contract is ending soon!</strong>  <p>It has been set for renewal, but there is no new contract yet.</p>
+                </div>
+            {% endif %}
+
+            <p>Start : {{ c.start_date }}</p>
+            <p>End : {{ c.end_date }}</p>
+            <p>Rate : ${{ c.get_monthly_rate }} pcm</p>
+            <p>Renew After Expiration: <strong>{{ c.renew_after_expires }}</strong></p>
+            <p>Task Progress: </p>
+            <div class="progress progress-striped active">
+            <div class="progress-bar" style="width:{{ c.tasks_progress }}%"></div>
+            </div>
+            <div>
+            {% if c.tasks_completed %}<p><strong>All contract tasks are completed.</strong></p>
+            {% else %}<p><strong>There are unfinished tasks for this contract.</strong></p>
+            {% endif %}
+            </div>
+        </div>
+
+        </div>
+
+        {% endfor %}
+    {% else %}
+        <h2> There are no contracts assigned to this staff member. </h2>
+    {% endif %}
+
+    <a href="{% url 'staff_update' staff.id %}" class="btn btn-primary">Edit Staff Details</a>
+</div>
+
+<div>
+<hr>
+
+<h2>Assigned Assets</h2>
+{% for asset in asset_list %}
+<h3><a href="{% url 'asset_view' asset.id %}">{{ asset }}</a></h3> 
+{% endfor %}
+
+
+</div>
+
+
+
+{% endblock %}
