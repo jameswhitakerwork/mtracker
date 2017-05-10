@@ -131,6 +131,10 @@ def download_assets(request):
 
     assets = Asset.objects.all()
     for asset in assets:
+        try:
+            s_id = asset.assigned().staff_id
+        else:
+            s_id = None
         writer.writerow([
             asset.no,
             asset.descr,
@@ -139,7 +143,7 @@ def download_assets(request):
             asset.program.name,
             asset.office.name,
             asset.assigned(),
-            asset.assigned().staff_id
+            s_id
         ])
 
     writer.writerow(['Asset Log Export', t, '', '', '', '', ])
