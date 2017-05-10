@@ -133,7 +133,7 @@ def download_assets(request):
     for asset in assets:
         writer.writerow([
             asset.no,
-            asset.descr.name,
+            asset.descr,
             asset.add_descr,
             asset.serial,
             asset.program.name,
