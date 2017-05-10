@@ -133,7 +133,7 @@ def download_assets(request):
     for asset in assets:
         try:
             s_id = asset.assigned().staff_id
-        else:
+        except:
             s_id = None
         writer.writerow([
             asset.no,
