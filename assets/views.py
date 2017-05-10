@@ -20,7 +20,7 @@ import csv
 
 class Asset_Create(CreateView):
     form_class = AssetForm
-    template_name = "hr/generic_form.html"
+    template_name = "assets/generic_form.html"
     success_url = "/assets/asset-list.html"
 
 assetcreate = permission_required('asset_access')(Asset_Create.as_view())
