@@ -18,9 +18,8 @@ class AssetType(models.Model):
 class Asset(models.Model):
     STATUS_CHOICES = (
         ('active', 'active'),
-        ('inactive', 'inactive'),
-        ('destroyed', 'destroyed'),
-        ('lost', 'lost'),
+        ('desposed', 'desposed'),
+        ('lost_missing_stolen', 'lost, missing or stolen'),
     )
 
     no = models.IntegerField(unique=True)
