@@ -66,3 +66,53 @@ def report_download(request, filename):
 
   reportdownload = permission_required('download_reports')(report_download)
 
+
+def send_alerts(request):
+        current_site = Site.objects.get_current()
+        domain = current_site.domain
+        for report in Report.objects.all():
+            deadline = str(report.deadline)
+            link = domain + '/reports/report-submit/%s' % report.id
+            print report.reportee
+            if not report.report:
+
+                if report.days_left() == 14:
+                    subject = "%s is due in 2 weeks" % report.name
+                    print subject
+                    message = "%s is due on %s. Go to %s to mark this report as submitted." % (report.name, deadline, link)
+                    print message
+                    send_mail(
+                        subject,
+                        message,
+                        'iommicronesiatrackerapp@gmail.com',
+                        [report.reportee],
+                        cc="ssimpson@iom.int",
+                        fail_silently=False
+                    )
+
+                if report.days_left() == 1:
+                    subject = "%s is due tomorrow" % report.name
+                    print subject
+                    message = "%s is due on %s. Go to %s to mark this report as submitted." % (report.name, deadline, link)
+                    print message
+                    send_mail(
+                        subject,
+                        message,
+                        'iommicronesiatrackerapp@gmail.com',
+                        [report.reportee],
+                        cc="ssimpson@iom.int",
+                        fail_silently=False
+                    )
+                if report.days_left() < 0:
+                    subject = "%s is overdue by %s days" % (report.name, str(-report.days_left()))
+                    print subject
+                    message = "%s was due on %s. Go to %s to submit this report." % (report.name, deadline, link)
+                    print message
+                    send_mail(
+                        subject,
+                        message,
+                        'iommicronesiatrackerapp@gmail.com',
+                        [report.reportee],
+                        fail_silently=False,
+                        cc="ssimpson@iom.int",
+                    )

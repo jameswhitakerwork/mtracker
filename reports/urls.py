@@ -14,5 +14,7 @@ urlpatterns = [
 
     url(r'^$', views.report_list, name='report-list'),
 
+    url(r'^send-alerts/$', views.send_alerts, name='send-alerts'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
