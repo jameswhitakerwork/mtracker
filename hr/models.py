@@ -77,7 +77,7 @@ class Duty_Station(models.Model):
 
 class Program(models.Model):
     name = models.CharField(max_length=32, unique=True)
-    desc = models.CharField(max_length=64, blank=True)
+    desc = models.CharField(max_length=256, blank=True)
 
     def __unicode__(self):
         if self.desc:
