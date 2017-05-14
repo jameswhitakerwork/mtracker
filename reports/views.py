@@ -43,6 +43,7 @@ class ReportSubmit(UpdateView):
     form_class = ReportSubmitForm
     template_name = 'reports/form.html'
     success_url = '/reports/'
+    success_message = '%(name)s was successfully marked as submitted'
 
 @login_required
 def report_list(request):

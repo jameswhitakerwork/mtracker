@@ -37,3 +37,6 @@ coverage.xml
 
 PYC Files
 *.pyc
+
+DB
+db.sqlite
