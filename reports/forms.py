@@ -18,6 +18,7 @@ class ReportForm(ModelForm):
             'reportee': 'Email address of reportee',
         }
 
+
 class ReportSubmitForm(ModelForm):
     class Meta:
         model = Report
