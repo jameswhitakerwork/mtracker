@@ -5,8 +5,14 @@ from hr.models import Office, Staff, Program
 
 from django.utils import timezone
 
+from jsignature.mixins import JSignatureFieldsMixin
+
 
 # Create your models here.
+
+class AssetSignatureModel(JSignatureFieldsMixin):
+    pass
+
 
 class AssetType(models.Model):
     name = models.CharField(max_length=128)
@@ -65,5 +71,6 @@ class Check(models.Model):
     date = models.DateField(default=timezone.now())
     check_type = models.CharField(choices=CHECK_CHOICES, max_length=8)
     document = models.FileField(upload_to='assets/', blank=True)
+    signature = models.OneToOneField(AssetSignatureModel)
 
 

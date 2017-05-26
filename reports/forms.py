@@ -24,5 +24,5 @@ class ReportSubmitForm(ModelForm):
         model = Report
         fields = ['report', ]
         labels = {
-            'report', 'Check this box to mark the report as submitted',
+            'report': 'Check this box to mark the report as submitted',
         }
