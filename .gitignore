@@ -35,8 +35,8 @@ coverage.xml
 # Django stuff:
 *.log
 
-PYC Files
+# PYC Files
 *.pyc
 
-DB
+# DB
 db.sqlite
