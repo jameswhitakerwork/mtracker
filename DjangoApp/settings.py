@@ -23,6 +23,8 @@ LIVE = True
 
 
 STATICFILES_DIRS = ('D:/home/site/wwwroot/static', STATIC_DIR)
+if LIVE:
+    STATIC_DIR = 'D:/home/site/wwwroot/static'
 
 
 # Static files (CSS, JavaScript, Images)
