@@ -21,10 +21,8 @@ STATIC_URL = '/static/'
 
 LIVE = True
 
-if LIVE:
-    STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
-else:
-    STATICFILES_DIRS = (STATIC_DIR,)
+
+STATICFILES_DIRS = ('D:/home/site/wwwroot/static', STATIC_DIR)
 
 
 # Static files (CSS, JavaScript, Images)
