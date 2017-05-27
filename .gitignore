@@ -40,3 +40,7 @@ coverage.xml
 
 # DB
 db.sqlite
+
+
+DjangoApp/wsgi.py
+DjangoApp/wsgi.pyc
