@@ -31,5 +31,7 @@ urlpatterns = [
         r'^download-assets/',
         views.download_assets, name='download_assets'),
 
+    url(r'^signout-form/', 'assets.views.checkout_sig', name='checkout-sig'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

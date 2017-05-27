@@ -3,10 +3,11 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.urls import reverse_lazy, reverse
+from django.template import RequestContext
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from .models import *
-from .forms import Checkin_Form, Checkout_Form, AssetForm
+from .forms import Checkin_Form, Checkout_Form, AssetForm, Signout_Form, Signout_Signature_Form
 from .filters import AssetFilter
 import django_tables2 as tables
 from django_tables2.utils import A
@@ -78,6 +79,21 @@ class Checkin_Create(CreateView):
         asset_id = self.kwargs['asset_id']
         ctx['asset'] = Asset.objects.get(id=asset_id)
         return ctx
+
+def checkout_sig(request):
+    model_url = 'checkout-sig'
+
+    if request.method == "POST":
+        ssform = Signout_Form(request.POST, instance=AssetSignature())
+        sform = Signout_Signature_Form(request.POST, instance=Check())
+        if ssform.is_valid() and sform.is_valid():
+            new_signout_signature = ssform.save()
+            new_signout = sform.save()
+            return HttpResponseRedirect('asset-list')
+    else:
+        ssform = Signout_Signature_Form(instance=AssetSignature())
+        sform = Signout_Form(instance=Check())
+    return render_to_response('signout_form.html', {'ssform': ssform, 'sform': sform, 'model_url': model_url,}, context_instance=RequestContext(request))
 
 
 

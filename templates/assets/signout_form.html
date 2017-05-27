@@ -1,0 +1,21 @@
+<form action="{% url model_url %}" method="POST">
+  {% csrf_token %}
+
+  {% if model_url == 'checkout-sig' %}
+
+    {% for field in sform %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>
+    {% endfor %}
+    {% for field in ssform %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>
+    {% endfor %}
+
+  {% endif %}
+     <input id="save_sigform" type="submit" value="Add"/>
+</form>

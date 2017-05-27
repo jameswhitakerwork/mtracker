@@ -10,7 +10,7 @@ from jsignature.mixins import JSignatureFieldsMixin
 
 # Create your models here.
 
-class AssetSignatureModel(JSignatureFieldsMixin):
+class AssetSignature(JSignatureFieldsMixin):
     pass
 
 

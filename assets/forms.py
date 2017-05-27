@@ -1,7 +1,9 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, Form
 from django.contrib.admin.widgets import AdminFileWidget
 from .models import Asset, Check
 from django import forms
+from jsignature.forms import JSignatureField
+from jsignature.widgets import JSignatureWidget
 
 years = [x for x in range(2000, 2025)]
 
@@ -44,3 +46,12 @@ class Checkout_Form(ModelForm):
             'check_type': forms.HiddenInput(),
             'document': AdminFileWidget,
         }
+
+class Signout_Form(ModelForm):
+    class Meta:
+        model = Check
+        exclude = ['',]
+
+class Signout_Signature_Form(Form):
+    signature = JSignatureField()
+
