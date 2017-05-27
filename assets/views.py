@@ -95,7 +95,7 @@ def checkout_sig(request):
     else:
         ssform = Signout_Signature_Form()
         sform = Signout_Form(instance=Check())
-    return render_to_response('signout_form.html', {'ssform': ssform, 'sform': sform, 'model_url': model_url,}, context_instance=RequestContext(request))
+    return render_to_response('assets/signout_form.html', {'ssform': ssform, 'sform': sform, 'model_url': model_url,}, context_instance=RequestContext(request))
 
 
 
