@@ -1,3 +1,16 @@
+{% extends "assets_base.html" %}
+{% load staticfiles %}
+
+
+<ul class="breadcrumb">
+  <li><a href="{% url 'index' %}">Home</a></li>
+  <li><a href="{% url 'dashboard' %}">Assets</a></li>
+  <li class="active">Signout</li>
+</ul>
+
+
+{% block body-content %}
+
 <form action="{% url model_url %}" method="POST">
   {% csrf_token %}
 
@@ -19,3 +32,5 @@
   {% endif %}
      <input id="save_sigform" type="submit" value="Add"/>
 </form>
+
+{% endblock %}
