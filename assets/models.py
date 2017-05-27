@@ -71,6 +71,6 @@ class Check(models.Model):
     date = models.DateField(default=timezone.now())
     check_type = models.CharField(choices=CHECK_CHOICES, max_length=8)
     document = models.FileField(upload_to='assets/', blank=True)
-    signature = models.ForeignKey(AssetSignatureModel)
+    signature = models.ForeignKey(AssetSignature)
 
 
