@@ -84,10 +84,12 @@ def checkout_sig(request):
     model_url = 'checkout-sig'
 
     if request.method == "POST":
-        ssform = Signout_Form(request.POST, instance=AssetSignature())
+        ssform = Signout_Form(request.POST)
         sform = Signout_Signature_Form(request.POST, instance=Check())
         if ssform.is_valid() and sform.is_valid():
-            new_signout_signature = ssform.save()
+            asig = AssetSignature()
+            asig.signature = sform.cleaned_data.get('signature')
+            asig.save()
             new_signout = sform.save()
             return HttpResponseRedirect('asset-list')
     else:
