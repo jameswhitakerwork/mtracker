@@ -93,7 +93,7 @@ def checkout_sig(request):
             new_signout = sform.save()
             return HttpResponseRedirect('asset-list')
     else:
-        ssform = Signout_Signature_Form(instance=AssetSignature())
+        ssform = Signout_Signature_Form()
         sform = Signout_Form(instance=Check())
     return render_to_response('signout_form.html', {'ssform': ssform, 'sform': sform, 'model_url': model_url,}, context_instance=RequestContext(request))
 
