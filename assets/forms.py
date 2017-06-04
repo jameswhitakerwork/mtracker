@@ -1,6 +1,6 @@
 from django.forms import ModelForm, Form
 from django.contrib.admin.widgets import AdminFileWidget
-from .models import Asset, Check
+from .models import Asset, Check, AssetSignature
 from django import forms
 from jsignature.forms import JSignatureField
 from jsignature.widgets import JSignatureWidget
@@ -50,8 +50,19 @@ class Checkout_Form(ModelForm):
 class Signout_Form(ModelForm):
     class Meta:
         model = Check
-        exclude = ['',]
+        exclude = ['signature', 'approval_signature', 'document', 'check_type']
+        labels = {'date': 'Date: (YYYY-MM-DD)',}
 
-class Signout_Signature_Form(Form):
-    signature = JSignatureField()
+class Signout_Signature_Form(ModelForm):
+    class Meta:
+        model = AssetSignature
+        widgets = {'signature': JSignatureWidget, }
+        fields = ['signature', ]
+
+class Signout_Signature_Approved_Form(ModelForm):
+    class Meta:
+        model = AssetSignature
+        widgets = {'signature': JSignatureWidget, }
+        fields = ['signature', ]
+
 

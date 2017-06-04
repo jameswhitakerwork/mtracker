@@ -7,7 +7,7 @@ from django.template import RequestContext
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from .models import *
-from .forms import Checkin_Form, Checkout_Form, AssetForm, Signout_Form, Signout_Signature_Form
+from .forms import Checkin_Form, Checkout_Form, AssetForm, Signout_Form, Signout_Signature_Form, Signout_Signature_Approved_Form
 from .filters import AssetFilter
 import django_tables2 as tables
 from django_tables2.utils import A
@@ -80,22 +80,38 @@ class Checkin_Create(CreateView):
         ctx['asset'] = Asset.objects.get(id=asset_id)
         return ctx
 
+def make_aaf(checkout):
+    pass
+
 def checkout_sig(request):
     model_url = 'checkout-sig'
 
     if request.method == "POST":
         ssform = Signout_Form(request.POST)
         sform = Signout_Signature_Form(request.POST)
-        if ssform.is_valid() and sform.is_valid():
+        sform2 = Signout_Signature_Approved_Form(request.POST)
+        if sform.is_valid() and sform2.is_valid() and ssform.is_valid():
             asig = AssetSignature()
             asig.signature = sform.cleaned_data.get('signature')
             asig.save()
-            new_signout = sform.save()
+            asig2 = AssetSignature()
+            asig2.signature = sform2.cleaned_data.get('signature')
+            asig2.save()
+            checkout = ssform.save()
+            checkout.signature = asig
+            checkout.approval_signature = asig2
+            checkout.save()
+            """
+            aaf = make_aaf(checkout)
+            checkout.document = aaf
+            checkout.save()
+            """
             return HttpResponseRedirect('asset-list')
     else:
         ssform = Signout_Signature_Form()
-        sform = Signout_Form(instance=Check())
-    return render(request, 'assets/signout_form.html', {'ssform': ssform, 'sform': sform, 'model_url': model_url,})
+        sform = Signout_Form(instance=Check(), initial={'check_type': 'in', })
+        sform2 = Signout_Signature_Approved_Form()
+    return render(request, 'assets/signout_form.html', {'ssform': ssform, 'sform': sform, 'sform2': sform2, 'model_url': model_url,})
 
 
 
