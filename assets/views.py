@@ -85,7 +85,7 @@ def checkout_sig(request):
 
     if request.method == "POST":
         ssform = Signout_Form(request.POST)
-        sform = Signout_Signature_Form(request.POST, instance=Check())
+        sform = Signout_Signature_Form(request.POST)
         if ssform.is_valid() and sform.is_valid():
             asig = AssetSignature()
             asig.signature = sform.cleaned_data.get('signature')
@@ -95,7 +95,7 @@ def checkout_sig(request):
     else:
         ssform = Signout_Signature_Form()
         sform = Signout_Form(instance=Check())
-    return render_to_response('assets/signout_form.html', {'ssform': ssform, 'sform': sform, 'model_url': model_url,}, context_instance=RequestContext(request))
+    return render(request, 'assets/signout_form.html', {'ssform': ssform, 'sform': sform, 'model_url': model_url,})
 
 
 
